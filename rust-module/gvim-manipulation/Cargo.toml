@@ -1,0 +1,13 @@
+[package]
+name = "gvim_manipulation"
+version = "0.1.0"
+authors = ["Steven <steven.s32@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "gvim_manipulation"
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["winuser", "processthreadsapi"] }
+
+[dependencies]
