@@ -1,2 +1,4 @@
 /target
+/target32
+/target64
 Cargo.lock
