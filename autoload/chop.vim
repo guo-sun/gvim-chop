@@ -17,20 +17,20 @@ function! s:CallRustFn(fnName, arg)
     return s:CallLocalLib(l:dllPath, a:fnName, a:arg)
 endfunction
 
-function! GvimChop#fullscreen()
+function! chop#fullscreen()
     call s:CallRustFn("fullscreen", 0)
 endfunction
 
-function! GvimChop#opacity(alpha)
+function! chop#opacity(alpha)
         " alpha: Number from 0 to 100
     call s:CallRustFn("opacity", float2nr((a:alpha / 100.0) * 255))
 endfunction
 
-function! GvimChop#remove_title_bar()
+function! chop#remove_title_bar()
     call s:CallRustFn("remove_title_bar", 0)
 endfunction
 
-function! GvimChop#position_window(pos_string)
+function! chop#position_window(pos_string)
         " pos_string: x-y-width-height in percentage (Number 0 to 100)
     call s:CallRustFn("position_window", a:pos_string)
 endfunction
