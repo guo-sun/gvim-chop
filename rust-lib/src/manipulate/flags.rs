@@ -65,7 +65,7 @@ pub fn remove_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
                     GetWindowLongW(hwnd, style_flag),
                     style as i32)
                 )
-        }, "add window style")
+        }, "remove window style")
 }
 
 pub fn add_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
@@ -128,7 +128,7 @@ pub fn set_window_rect(hwnd: HWND,
             rect.right - rect.left,
             rect.bottom - rect.top,
             flags)
-    }, "set position")
+    }, "set position rect")
 }
 
 pub fn get_window_rect(hwnd: HWND) -> Option<RECT>{
@@ -161,7 +161,7 @@ pub fn get_monitor_rect(hwnd: HWND) -> Option<RECT> {
     }
 }
 
-/// Calls SetWindowPos without changes to force redraw
+/// Calls SetWindowPos to force redraw
 pub fn push_changes(hwnd: HWND) -> BOOL {
     attempt(unsafe {
         SetWindowPos(
@@ -172,7 +172,7 @@ pub fn push_changes(hwnd: HWND) -> BOOL {
             0,
             0,
             SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE | SWP_NOMOVE
-            )}, "set window pos")
+            )}, "push window changes")
 }
 
 pub fn get_active_window() -> HWND {
