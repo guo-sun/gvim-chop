@@ -1,5 +1,5 @@
 pub mod flags;
-mod message;
+pub mod message;
 
 use flags::*;
 use message::*;
@@ -53,7 +53,7 @@ pub fn full_screen(hwnd: HWND) -> BOOL {
 }
 
 pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {
-    attempt(unsafe{SetLayeredWindowAttributes(
+    attempt(unsafe { SetLayeredWindowAttributes(
         hwnd,
         0,
         opacity,

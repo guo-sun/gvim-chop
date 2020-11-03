@@ -35,6 +35,9 @@ use winapi::{
         SWP_NOACTIVATE,
 
         MONITOR_DEFAULTTONEAREST,
+
+        HWND_TOPMOST,
+        HWND_NOTOPMOST
     }
 };
 
@@ -79,6 +82,38 @@ pub fn add_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
 
 pub fn get_style(hwnd: HWND, style_flag: i32) -> i32 {
     unsafe { GetWindowLongW(hwnd, style_flag) }
+}
+
+pub fn set_window_istopmost(hwnd: HWND, istopmost: bool) -> BOOL {
+    attempt(unsafe {
+        SetWindowPos(
+            hwnd,
+            if istopmost {
+                HWND_TOPMOST
+            } else {
+                HWND_NOTOPMOST
+            },
+            0,
+            0,
+            0,
+            0,
+            SWP_NOSIZE | SWP_NOMOVE)
+    }, "set window topmost")
+}
+
+pub fn set_window_pos(hwnd: HWND,
+                x: i32, y: i32, w: i32, h: i32,
+                flags: u32) -> BOOL {
+    attempt(unsafe {
+        SetWindowPos(
+            hwnd,
+            null_mut(),
+            x,
+            y,
+            w,
+            h,
+            flags)
+    }, "set position")
 }
 
 pub fn set_window_rect(hwnd: HWND,

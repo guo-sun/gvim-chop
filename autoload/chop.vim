@@ -1,7 +1,10 @@
+let s:path = fnamemodify(expand('<sfile>'), ':p:h:h')
+let s:pinned = 0
+
 function! s:CallLocalLib(relativeDllPath, fnName, arg) abort
         " Vim secretly switches the current directory to
         " the Vim exe directory, so we need the absolute path here
-    let l:absPath = fnamemodify(expand('%'), ':p:h:h').a:relativeDllPath
+    let l:absPath = s:path.a:relativeDllPath
 
     if !filereadable(l:absPath)
         echoerr "Couldn't find dll at: ".l:absPath
@@ -33,4 +36,30 @@ endfunction
 function! chop#position_window(pos_string)
         " pos_string: x-y-width-height in percentage (Number 0 to 100)
     call s:CallRustFn("position_window", a:pos_string)
+endfunction
+
+function! chop#pin_topmost()
+    call s:CallRustFn("pin_window", 1)
+endfunction
+
+function! chop#notepad()
+    call chop#remove_title_bar()
+    call chop#position_window("60-40-40-60")
+endfunction
+
+function! chop#maxscreen()
+    call chop#remove_title_bar()
+    call chop#fullscreen()
+endfunction
+
+function! chop#pin()
+    if s:pinned
+        let s:pinned = 0
+        call s:CallRustFn("pin_window", 0)
+        echom "Unpinned"
+    else
+        let s:pinned = 1
+        call s:CallRustFn("pin_window", 1)
+        echom "Pinned"
+    endif
 endfunction
