@@ -1,1 +1,1 @@
-cargo build --lib --target x86_64-pc-windows-msvc --target-dir target64
+./build_common x86_64-pc-windows-msvc

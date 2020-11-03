@@ -1,4 +1,5 @@
-use gvim_manipulation::manip::*;
+mod manipulate;
+use manipulate::*;
 
 #[no_mangle]
 pub extern "C" fn do_thing() {
