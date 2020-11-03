@@ -48,7 +48,7 @@ use winapi::um::winuser::{
     WS_EX_LAYERED,
 };
 
-pub fn t(x: BOOL, msg: &str) -> BOOL {
+pub fn attempt(x: BOOL, msg: &str) -> BOOL {
     if x == 0 {
         print(&format!("Whoops.. Couldn't {}\n\n{}", msg, Error::last_os_error()));
     }
@@ -57,7 +57,7 @@ pub fn t(x: BOOL, msg: &str) -> BOOL {
 
 pub fn remove_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
     unsafe {
-        t(SetWindowLongW(
+        attempt(SetWindowLongW(
                 hwnd,
                 style_flag,
                 flags_remove(
@@ -70,7 +70,7 @@ pub fn remove_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
 
 pub fn add_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
     unsafe {
-        t(SetWindowLongW(
+        attempt(SetWindowLongW(
                 hwnd,
                 style_flag,
                 flags_add(
@@ -86,7 +86,7 @@ pub fn get_style(hwnd: HWND, style_flag: i32) -> i32 {
 }
 
 pub fn remove_title(hwnd: HWND) -> BOOL {
-    t(remove_style(
+    attempt(remove_style(
             hwnd,
             GWL_STYLE,
             WS_CAPTION)
@@ -94,7 +94,7 @@ pub fn remove_title(hwnd: HWND) -> BOOL {
 }
 
 pub fn enable_transparency(hwnd: HWND) -> BOOL {
-    t(add_style(
+    attempt(add_style(
             hwnd,
             GWL_EXSTYLE,
             WS_EX_LAYERED)
@@ -111,7 +111,7 @@ pub fn full_screen(hwnd: HWND) -> BOOL {
 }
 
 pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {
-    t(unsafe{SetLayeredWindowAttributes(
+    attempt(unsafe{SetLayeredWindowAttributes(
         hwnd,
         0,
         opacity,
@@ -122,7 +122,7 @@ pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {
 pub fn set_window_rect(hwnd: HWND,
                 rect: RECT,
                 flags: u32) -> BOOL {
-    t(unsafe {
+    attempt(unsafe {
         SetWindowPos(
             hwnd,
             null_mut(),
@@ -137,7 +137,7 @@ pub fn set_window_rect(hwnd: HWND,
 pub fn get_window_rect(hwnd: HWND) -> Option<RECT>{
     let mut rect : RECT = unsafe { mem::zeroed() };
 
-    if t(unsafe {
+    if attempt(unsafe {
         GetWindowRect(hwnd, &mut rect)
     }, "get window rect") == 0 {
         None
@@ -153,7 +153,7 @@ pub fn get_monitor_rect(hwnd: HWND) -> Option<RECT> {
         let mut monitor_info : MONITORINFO = mem::zeroed();
         monitor_info.cbSize = mem::size_of::<MONITORINFO>().try_into().unwrap();
 
-        if t(GetMonitorInfoW(
+        if attempt(GetMonitorInfoW(
                 monitor,
                 &mut monitor_info)
           , "get monitor info") == 0 {
@@ -166,7 +166,7 @@ pub fn get_monitor_rect(hwnd: HWND) -> Option<RECT> {
 
 /// Calls SetWindowPos without changing to force redraw
 pub fn push_changes(hwnd: HWND) -> BOOL {
-    t(unsafe{SetWindowPos(
+    attempt(unsafe{SetWindowPos(
         hwnd,
         null_mut(),
         0,
