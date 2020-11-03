@@ -2,11 +2,6 @@ mod manipulate;
 use manipulate::*;
 
 #[no_mangle]
-pub extern "C" fn do_thing() {
-    hi();
-}
-
-#[no_mangle]
 pub extern "C" fn fullscreen() {
     with_active_gvim(
         |hwnd| { full_screen(hwnd); });

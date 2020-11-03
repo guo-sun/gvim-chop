@@ -2,7 +2,6 @@ pub mod flags;
 pub mod message;
 
 use flags::*;
-use message::*;
 
 use winapi::{
     shared::{
@@ -64,31 +63,5 @@ pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {
 pub fn with_active_gvim(on_hwnd: impl Fn(HWND)) {
     let hwnd = get_active_window();
     on_hwnd(hwnd);
-    push_changes(hwnd);
-}
-
-pub fn hi() {
-    let hwnd = get_active_window();
-
-    if let Some(rect) = get_window_rect(hwnd) {
-        print(&format!("Window is:\n{} {} {} {}"
-                       , rect.top
-                       , rect.bottom
-                       , rect.left
-                       , rect.right));
-    }
-
-    if let Some(rect) = get_monitor_rect(hwnd) {
-        print(&format!("Monitor is:\n{} {} {} {}"
-                       , rect.top
-                       , rect.bottom
-                       , rect.left
-                       , rect.right));
-    }
-
-    remove_title(hwnd);
-    enable_transparency(hwnd);
-    set_opacity(hwnd, 240u8);
-    full_screen(hwnd);
     push_changes(hwnd);
 }

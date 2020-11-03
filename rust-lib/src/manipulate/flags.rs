@@ -80,6 +80,7 @@ pub fn add_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
         }, "add window style")
 }
 
+#[allow(dead_code)]
 pub fn get_style(hwnd: HWND, style_flag: i32) -> i32 {
     unsafe { GetWindowLongW(hwnd, style_flag) }
 }
@@ -131,6 +132,7 @@ pub fn set_window_rect(hwnd: HWND,
     }, "set position rect")
 }
 
+#[allow(dead_code)]
 pub fn get_window_rect(hwnd: HWND) -> Option<RECT>{
     let mut rect : RECT = unsafe { mem::zeroed() };
 
