@@ -12,7 +12,7 @@ function! s:CallLocalLib(relativeDllPath, fnName, arg) abort
 endfunction
 
 function! s:CallRustFn(fnName, arg)
-    let l:dllPath = "/rust-module/gvim_chop.dll"
+    let l:dllPath = "/rust-lib/gvim_chop.dll"
 
     return s:CallLocalLib(l:dllPath, a:fnName, a:arg)
 endfunction
