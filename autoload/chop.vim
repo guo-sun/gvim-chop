@@ -1,24 +1,18 @@
 let s:path = fnamemodify(expand('<sfile>'), ':p:h:h')
 let s:pinned = 0
 let s:opacity = 100
+let s:dllPath = "/rust-lib/gvim_chop.dll"
+let s:absPath = s:path.s:dllPath
+    " Vim secretly switches the current directory to
+    " the Vim exe directory, so we need the absolute path here
 
-function! s:CallLocalLib(relativeDllPath, fnName, arg) abort
-        " Vim secretly switches the current directory to
-        " the Vim exe directory, so we need the absolute path here
-    let l:absPath = s:path.a:relativeDllPath
-
-    if !filereadable(l:absPath)
-        echoerr "Couldn't find dll at: ".l:absPath
+function! s:CallRustFn(fnName, arg)
+    if !filereadable(s:absPath)
+        echoerr "Couldn't find dll at: ".s:absPath
         return
     endif
 
-    return libcallnr(l:absPath, a:fnName, a:arg)
-endfunction
-
-function! s:CallRustFn(fnName, arg)
-    let l:dllPath = "/rust-lib/gvim_chop.dll"
-
-    return s:CallLocalLib(l:dllPath, a:fnName, a:arg)
+    return libcallnr(s:absPath, a:fnName, a:arg)
 endfunction
 
 function! chop#fullscreen()
