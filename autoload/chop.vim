@@ -1,5 +1,6 @@
 let s:path = fnamemodify(expand('<sfile>'), ':p:h:h')
 let s:pinned = 0
+let s:opacity = 100
 
 function! s:CallLocalLib(relativeDllPath, fnName, arg) abort
         " Vim secretly switches the current directory to
@@ -26,6 +27,7 @@ endfunction
 
 function! chop#opacity(alpha)
         " alpha: Number from 0 to 100
+    let s:opacity = a:alpha
     call s:CallRustFn("opacity", float2nr((a:alpha / 100.0) * 255))
 endfunction
 
@@ -50,6 +52,14 @@ endfunction
 function! chop#maxscreen()
     call chop#remove_title_bar()
     call chop#fullscreen()
+endfunction
+
+function! chop#clarify()
+    call chop#opacity(max([s:opacity - 5, 0]))
+endfunction
+
+function! chop#obscure()
+    call chop#opacity(min([s:opacity + 5, 100]))
 endfunction
 
 function! chop#pin()
