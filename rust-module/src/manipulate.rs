@@ -23,8 +23,17 @@ use winapi::{
 
         WS_THICKFRAME,
         WS_EX_LAYERED,
+        WS_CAPTION,
     }
 };
+
+pub fn remove_title(hwnd: HWND) -> BOOL {
+    attempt(remove_style(
+            hwnd,
+            GWL_STYLE,
+            WS_CAPTION)
+            , "set window style")
+}
 
 pub fn enable_transparency(hwnd: HWND) -> BOOL {
     attempt(add_style(
@@ -51,6 +60,13 @@ pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {
         LWA_ALPHA
     )}, "set opacity")
 }
+
+pub fn with_active_gvim(on_hwnd: impl Fn(HWND)) {
+    let hwnd = get_active_window();
+    on_hwnd(hwnd);
+    push_changes(hwnd);
+}
+
 pub fn hi() {
     let hwnd = get_active_window();
 

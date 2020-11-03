@@ -29,16 +29,12 @@ use winapi::{
 
         MONITORINFO,
 
-        GWL_STYLE,
-
         SWP_NOMOVE,
         SWP_NOZORDER,
         SWP_NOSIZE,
         SWP_NOACTIVATE,
 
         MONITOR_DEFAULTTONEAREST,
-
-        WS_CAPTION,
     }
 };
 
@@ -79,19 +75,10 @@ pub fn add_style(hwnd: HWND, style_flag: i32, style: u32) -> BOOL {
                     style as i32)
                 )
         }, "add window style")
-    
 }
 
 pub fn get_style(hwnd: HWND, style_flag: i32) -> i32 {
     unsafe { GetWindowLongW(hwnd, style_flag) }
-}
-
-pub fn remove_title(hwnd: HWND) -> BOOL {
-    attempt(remove_style(
-            hwnd,
-            GWL_STYLE,
-            WS_CAPTION)
-            , "set window style")
 }
 
 pub fn set_window_rect(hwnd: HWND,
@@ -156,4 +143,3 @@ pub fn push_changes(hwnd: HWND) -> BOOL {
 pub fn get_active_window() -> HWND {
     unsafe { GetActiveWindow() }
 }
-

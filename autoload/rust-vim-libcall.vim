@@ -18,5 +18,19 @@ function! s:CallRustFn(fnName, arg)
 endfunction
 
 function! GvimChop#fullscreen()
-    call CallRustFn("fullscreen", 0, )
+    call CallRustFn("fullscreen", 0)
+endfunction
+
+function! GvimChop#opacity(alpha)
+        " alpha: Number from 0 to 100
+    call CallRustFn("opacity", float2nr((a:alpha / 100.0) * 255))
+endfunction
+
+function! GvimChop#remove_title_bar()
+    call CallRustFn("remove_title_bar", 0)
+endfunction
+
+function! GvimChop#position_window(pos_string)
+        " pos_string: x-y-width-height in percentage (Number 0 to 100)
+    call CallRustFn("position_window", a:pos_string)
 endfunction

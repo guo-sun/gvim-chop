@@ -8,15 +8,25 @@ pub extern "C" fn do_thing() {
 
 #[no_mangle]
 pub extern "C" fn fullscreen() {
-    let hwnd = get_active_window();
-    full_screen(hwnd);
-    push_changes(hwnd);
+    with_active_gvim(
+        |hwnd| { full_screen(hwnd); });
 }
 
 #[no_mangle]
 pub extern "C" fn opacity(alpha: i32) {
-    let hwnd = get_active_window();
-    enable_transparency(hwnd);
-    set_opacity(hwnd, alpha as u8);
-    push_changes(hwnd);
+    with_active_gvim(
+        |hwnd| {
+            enable_transparency(hwnd);
+            set_opacity(hwnd, alpha as u8);
+        });
+}
+
+#[no_mangle]
+pub extern "C" fn remove_title_bar() {
+    with_active_gvim(
+        |hwnd| { remove_title(hwnd); });
+}
+
+#[no_mangle]
+pub extern "C" fn position_window() {
 }
