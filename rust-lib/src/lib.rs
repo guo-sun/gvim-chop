@@ -25,8 +25,8 @@ pub extern "C" fn remove_title_bar() {
 use std::os::raw::c_char;
 use std::ffi::CStr;
 
-/// Takes string percent and returns an i32 between low and high
-fn str_perc_to_pos(percent: &str, low: i32, high: i32) -> i32 {
+/// Takes a percent as a string and returns an integer between low and high
+fn str_perc_to_value(percent: &str, low: i32, high: i32) -> i32 {
     let f: f32 = percent.parse().unwrap();
 
     let bottom = (f * (high as f32) / 100.0).ceil() as i32;
@@ -48,10 +48,10 @@ pub extern "C" fn position_window(pos_str: *const c_char) -> i32 {
             with_active_gvim(
                 |hwnd| {
                     if let Some(monitor_rect) = flags::get_monitor_rect(hwnd) {
-                        let x = str_perc_to_pos(a, monitor_rect.left, monitor_rect.right);
-                        let y = str_perc_to_pos(b, monitor_rect.top, monitor_rect.bottom);
-                        let w = str_perc_to_pos(c, monitor_rect.left, monitor_rect.right);
-                        let h = str_perc_to_pos(d, monitor_rect.top, monitor_rect.bottom);
+                        let x = str_perc_to_value(a, monitor_rect.left, monitor_rect.right);
+                        let y = str_perc_to_value(b, monitor_rect.top, monitor_rect.bottom);
+                        let w = str_perc_to_value(c, monitor_rect.left, monitor_rect.right);
+                        let h = str_perc_to_value(d, monitor_rect.top, monitor_rect.bottom);
 
                         flags::set_window_pos(hwnd, x, y, w, h, 0);
                     }
