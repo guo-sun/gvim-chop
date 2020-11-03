@@ -14,23 +14,23 @@ endfunction
 function! s:CallRustFn(fnName, arg)
     let l:dllPath = "/rust-module/gvim_chop.dll"
 
-    return CallLocalLib(l:dllPath, a:fnName, a:arg)
+    return s:CallLocalLib(l:dllPath, a:fnName, a:arg)
 endfunction
 
 function! GvimChop#fullscreen()
-    call CallRustFn("fullscreen", 0)
+    call s:CallRustFn("fullscreen", 0)
 endfunction
 
 function! GvimChop#opacity(alpha)
         " alpha: Number from 0 to 100
-    call CallRustFn("opacity", float2nr((a:alpha / 100.0) * 255))
+    call s:CallRustFn("opacity", float2nr((a:alpha / 100.0) * 255))
 endfunction
 
 function! GvimChop#remove_title_bar()
-    call CallRustFn("remove_title_bar", 0)
+    call s:CallRustFn("remove_title_bar", 0)
 endfunction
 
 function! GvimChop#position_window(pos_string)
         " pos_string: x-y-width-height in percentage (Number 0 to 100)
-    call CallRustFn("position_window", a:pos_string)
+    call s:CallRustFn("position_window", a:pos_string)
 endfunction
