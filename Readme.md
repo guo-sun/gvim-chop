@@ -22,3 +22,5 @@ noremap <C-k>z :call chop#pin()<CR>
 noremap <C-k>x :call chop#obscure()<CR>
 noremap <C-k>c :call chop#clarify()<CR>
 ```
+
+By default the opacity commands (obscure, clarify) have a step-size of 5. Counts can be added before the opacity commands, e.g. `2<C-k>c`.
