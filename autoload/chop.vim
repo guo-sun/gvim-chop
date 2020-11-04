@@ -2,6 +2,8 @@ let s:absDllPath = fnamemodify(expand('<sfile>'), ':p:h:h')."/rust-lib/gvim_chop
 
 let s:pinned = 0
 let s:opacity = 100
+let s:bgDropped = 0
+let s:bgColor = "#000000"
 
 function! s:CallRustFn(fnName, arg)
     if !filereadable(s:absDllPath)
@@ -62,5 +64,40 @@ function! chop#pin()
         let s:pinned = 1
         call s:CallRustFn("pin_window", 1)
         echom "Pinned"
+    endif
+endfunction
+
+function! s:GetHiGuibg()
+    return matchstr(execute('hi Normal'), 'guibg=\zs\S*')
+endfunction
+
+function! s:DropBg()
+    let s:bgColor = s:GetHiGuibg()
+    let s:bgDropped = 1
+
+    echom "Saved background as ".s:bgColor
+
+    if &bg == "light"
+        hi Normal guibg=#FFFFFF
+        call s:CallRustFn("transparent_white", 0)
+    else
+        hi Normal guibg=#000000
+        call s:CallRustFn("transparent_black", 0)
+    endif
+endfunction
+
+function! s:RevertBg()
+    let s:bgDropped = 0
+    echom "Reverting background as ".s:bgColor
+
+    call s:CallRustFn("transparent_none", 0)
+    execute('hi Normal guibg='.s:bgColor)
+endfunction
+
+function! chop#bg()
+    if s:bgDropped
+        call s:RevertBg()
+    else
+        call s:DropBg()
     endif
 endfunction

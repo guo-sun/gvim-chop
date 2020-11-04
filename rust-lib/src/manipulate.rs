@@ -19,6 +19,7 @@ use winapi::{
         GWL_STYLE,
 
         LWA_ALPHA,
+        LWA_COLORKEY,
 
         WS_THICKFRAME,
         WS_EX_LAYERED,
@@ -32,6 +33,14 @@ pub fn remove_title(hwnd: HWND) -> BOOL {
             GWL_STYLE,
             WS_CAPTION)
             , "set window style")
+}
+
+pub fn disable_transparency(hwnd: HWND) -> BOOL {
+    attempt(remove_style(
+            hwnd,
+            GWL_EXSTYLE,
+            WS_EX_LAYERED)
+            , "add transparency")
 }
 
 pub fn enable_transparency(hwnd: HWND) -> BOOL {
@@ -49,6 +58,15 @@ pub fn full_screen(hwnd: HWND) -> BOOL {
     } else {
         0
     }
+}
+
+pub fn set_transparent_color(hwnd: HWND, crkey: u32) -> BOOL {
+    attempt(unsafe { SetLayeredWindowAttributes(
+        hwnd,
+        crkey,
+        0,
+        LWA_COLORKEY
+    )}, "set transparent color")
 }
 
 pub fn set_opacity(hwnd: HWND, opacity: u8) -> BOOL {

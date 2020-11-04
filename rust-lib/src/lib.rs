@@ -81,3 +81,29 @@ pub extern "C" fn pin_window(do_pin: i32) {
                 });
         });
 }
+
+#[no_mangle]
+pub extern "C" fn transparent_black() {
+    with_active_gvim(
+        |hwnd| {
+            enable_transparency(hwnd);
+            set_transparent_color(hwnd, 0x00000000);
+        });
+}
+
+#[no_mangle]
+pub extern "C" fn transparent_white() {
+    with_active_gvim(
+        |hwnd| {
+            enable_transparency(hwnd);
+            set_transparent_color(hwnd, 0x00FFFFFF);
+        });
+}
+
+#[no_mangle]
+pub extern "C" fn transparent_none() {
+    with_active_gvim(
+        |hwnd| {
+            disable_transparency(hwnd);
+        });
+}
