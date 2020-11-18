@@ -1,7 +1,16 @@
+Modify the gVim window:
+- Chop off the title bar
+- Set opacity
+- Pin window to top
+- Make the background transparent
+- Position or size window
+
 ## Requirements
 Windows, rustup, cargo
 
 ## Installation
+
+Build the version which matches your gVim install, either
 
 `> ./build32.bat`
 
