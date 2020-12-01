@@ -25,12 +25,12 @@ If you're missing targets, install with:
 ## Usage
 
 ```
-noremap <C-w>k :call chop#maxscreen()<CR>
-noremap <C-w>j :call chop#notepad()<CR>
-noremap <C-k>z :call chop#pin()<CR>
-noremap <C-k>x :call chop#obscure()<CR>
-noremap <C-k>c :call chop#clarify()<CR>
-noremap <C-k>b :call chop#bg()<CR>
+noremap <leader>wk :call chop#maxscreen()<CR>
+noremap <leader>wj :call chop#notepad()<CR>
+noremap <leader>wz :call chop#pin()<CR>
+noremap <leader>wx :call chop#obscure()<CR>
+noremap <leader>wc :call chop#clarify()<CR>
+noremap <leader>wb :call chop#bg()<CR>
 ```
 
 By default the opacity commands (obscure, clarify) have a step-size of 5. Counts can be added before the opacity commands, e.g. `2<C-k>c`.
