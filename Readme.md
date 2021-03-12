@@ -18,6 +18,13 @@ or
 
 `> ./build64.bat`
 
+### Plugin
+
+In your .vimrc:
+`call minpac#add('guo-sun/gvim-chop', { 'do' : '!build32.bat'})`
+
+### Troubleshoot
+
 If you're missing targets, install with:
 
 `> ./rust-lib/add_rustup_targets.bat`
