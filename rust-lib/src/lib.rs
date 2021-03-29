@@ -22,6 +22,12 @@ pub extern "C" fn remove_title_bar() {
         |hwnd| { remove_title(hwnd); });
 }
 
+#[no_mangle]
+pub extern "C" fn add_title_bar() {
+    with_active_gvim(
+        |hwnd| { add_title(hwnd); });
+}
+
 use std::os::raw::c_char;
 use std::ffi::CStr;
 

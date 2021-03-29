@@ -27,6 +27,14 @@ use winapi::{
     }
 };
 
+pub fn add_title(hwnd: HWND) -> BOOL {
+    attempt(add_style(
+            hwnd,
+            GWL_STYLE,
+            WS_CAPTION)
+            , "set window style")
+}
+
 pub fn remove_title(hwnd: HWND) -> BOOL {
     attempt(remove_style(
             hwnd,

@@ -33,6 +33,10 @@ function! chop#opacity(opacity)
     call s:CallRustFn("opacity", float2nr((a:opacity / 100.0) * 255))
 endfunction
 
+function! chop#add_title_bar()
+    call s:CallRustFn("add_title_bar", 0)
+endfunction
+
 function! chop#remove_title_bar()
     call s:CallRustFn("remove_title_bar", 0)
 endfunction
