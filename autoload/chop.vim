@@ -14,23 +14,16 @@ function! s:CallRustFn(fnName, arg)
     return libcallnr(s:absDllPath, a:fnName, a:arg)
 endfunction
 
-function! s:Repeat(func, count)
-    let l:cur = 0
-
-    while l:cur < a:count
-        call a:func()
-        let l:cur += 1
-    endwhile
-endfunction
-
 function! chop#fullscreen()
     call s:CallRustFn("fullscreen", 0)
 endfunction
 
 function! chop#opacity(opacity)
         " opacity: Number from 0 to 100
-    let s:opacity = a:opacity
-    call s:CallRustFn("opacity", float2nr((a:opacity / 100.0) * 255))
+    let l:opacity = min([max([a:opacity, 0]), 100])
+    let s:opacity = l:opacity
+    call s:CallRustFn("opacity", float2nr((l:opacity / 100.0) * 255))
+    echom "Opacity: ".s:opacity
 endfunction
 
 function! chop#add_title_bar()
@@ -60,16 +53,12 @@ function! chop#maxscreen()
     call chop#fullscreen()
 endfunction
 
-function! chop#clarify() range
-    call s:Repeat({ -> chop#opacity(max([s:opacity - 5, 0])) },
-                \max([a:lastline - a:firstline, 1]))
-    echom "Opacity: ".s:opacity
+function! chop#clarify()
+    call chop#opacity(s:opacity - (v:count1 * 5))
 endfunction
 
-function! chop#obscure() range
-    call s:Repeat({ -> chop#opacity(min([s:opacity + 5, 100])) },
-                \max([a:lastline - a:firstline, 1]))
-    echom "Opacity: ".s:opacity
+function! chop#obscure()
+    call chop#opacity(s:opacity + (v:count1 * 5))
 endfunction
 
 function! chop#pin()

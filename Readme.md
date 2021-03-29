@@ -20,7 +20,7 @@ or
 
 ### Plugin
 
-In your .vimrc:
+In your .gvimrc:
 `call minpac#add('guo-sun/gvim-chop', { 'do' : '!build32.bat'})`
 
 ### Troubleshoot
@@ -31,13 +31,19 @@ If you're missing targets, install with:
 
 ## Usage
 
+:e $MYGVIMRC
+
 ```
 noremap <leader>wk :call chop#maxscreen()<CR>
 noremap <leader>wj :call chop#notepad()<CR>
+noremap <leader>wt :call chop#add_title_bar()<CR>
 noremap <leader>wz :call chop#pin()<CR>
-noremap <leader>wx :call chop#obscure()<CR>
-noremap <leader>wc :call chop#clarify()<CR>
 noremap <leader>wb :call chop#bg()<CR>
+noremap <leader>wx :<C-U>call chop#obscure()<CR>
+noremap <leader>wc :<C-U>call chop#clarify()<CR>
 ```
 
-By default the opacity commands (obscure, clarify) have a step-size of 5. Counts can be added before the opacity commands, e.g. `2<C-k>c`.
+Check [chop.vim](autoload/chop.vim) to see available functions in `chop#`.
+
+
+By default the opacity commands (obscure, clarify) have a step-size of 5. Counts can be added before the opacity commands, e.g. `2<leader>wc`.
